@@ -1,0 +1,13 @@
+sessionStartEpochTimestamp, 1679806136509
+
+index,filename,answer,answerInPlainText,userAnswerMatchesGroundTruth,answeredAtEpochTimestamp,timeElapsed(ms)
+0,iPhone7Plus-1_Auto_36.JPG,2,Over-Exposed,Wrong,1679806182335,45826
+1,OnePlus5-2_Over_87.JPG,2,Over-Exposed,Correct,1679806183510,1175
+2,iPhone6s-3JPG90Auto_Auto_57.JPG,2,Over-Exposed,Wrong,1679806183762,251
+3,iPhone7-4_Over_1.JPG,2,Over-Exposed,Correct,1679806184262,500
+4,SamsungS8-1_Over_9.JPG,2,Over-Exposed,Correct,1679806184611,349
+5,iPhoneX-1_Over_75.JPG,2,Over-Exposed,Correct,1679806184862,250
+6,iPhoneX-2_Auto_25.JPG,2,Over-Exposed,Wrong,1679806185262,400
+7,iPhone6s-1_Over_98.JPG,2,Over-Exposed,Correct,1679806185445,183
+8,Pixel1-3JPG90Auto_Auto_68.JPG,2,Over-Exposed,Wrong,1679806186028,583
+9,Pixel2-2JPG90Auto_Auto_80.JPG,2,Over-Exposed,Wrong,1679806186379,350

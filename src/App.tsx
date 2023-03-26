@@ -1,5 +1,4 @@
 import React from 'react';
-import FILENAMES from './InterraterImageFilenames';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -7,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
 
 import { UserAnswer } from './shared/types';
+import FILENAMES_FOR_DIFFERENT_PARTICIPANTS from './InterraterImageFilenames';
 import { saveLog, guessGroundTruthFromFilename } from './shared/utilities';
 
 const styles = {
@@ -46,12 +46,28 @@ const styles = {
 const App = () => {
     const [lastSelectionTimeStamp, setLastSelectionTimeStamp] = React.useState<null | number>(null);
     const [currentFilenameIndex, setCurrentFilenameIndex] = React.useState(0);
+    const [FILENAMES, setFILENAMES] = React.useState<string[]>([]);
 
     React.useEffect(() => {
+        let listOfFilenames = FILENAMES_FOR_DIFFERENT_PARTICIPANTS[0];
         setLastSelectionTimeStamp(Date.now());
         sessionStorage.clear();
         sessionStorage.setItem('session-start-epoch-timestamp', Date.now().toString());
         sessionStorage.setItem('user-answers', '[]');
+
+        if (window.location.search) {
+            const imageSet = parseInt(window.location.search.slice(1).split('=')[1]);
+            if (1 <= imageSet && imageSet <= FILENAMES_FOR_DIFFERENT_PARTICIPANTS.length) {
+                sessionStorage.setItem('image-set', imageSet.toString());
+                listOfFilenames = FILENAMES_FOR_DIFFERENT_PARTICIPANTS[imageSet - 1];
+            } else {
+                sessionStorage.setItem('imageSet', '1');
+            }
+        } else {
+            sessionStorage.setItem('imageSet', '1');
+        }
+
+        setFILENAMES(listOfFilenames);
     }, []);
 
     const onSelectOption = (option: number) => {
