@@ -53,6 +53,7 @@ const App = () => {
         setLastSelectionTimeStamp(Date.now());
         sessionStorage.clear();
         sessionStorage.setItem('session-start-epoch-timestamp', Date.now().toString());
+        sessionStorage.setItem('session-start-UTC-timestamp', new Date().toUTCString());
         sessionStorage.setItem('user-answers', '[]');
 
         if (window.location.search) {
@@ -95,6 +96,7 @@ const App = () => {
                 answerInPlainText: userAnswerInPlainText,
                 userAnswerMatchesGroundTruth: guessGroundTruthFromFilename(FILENAMES[currentFilenameIndex]) === option,
                 answeredAt: Date.now(),
+                answeredAtUTC: new Date().toUTCString(),
                 timeElapsed: Date.now() - lastSelectionTimeStamp,
             });
             sessionStorage.setItem('user-answers', JSON.stringify(userAnswers));

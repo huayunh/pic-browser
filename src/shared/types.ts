@@ -5,5 +5,6 @@ export type UserAnswer = {
     answerInPlainText: string;
     userAnswerMatchesGroundTruth: boolean;
     answeredAt: number;
+    answeredAtUTC: string;
     timeElapsed: number;
 };

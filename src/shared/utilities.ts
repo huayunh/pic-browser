@@ -1,5 +1,7 @@
 import { UserAnswer } from './types';
 
+const formatDateNumbers = (num: number): string => num.toString().padStart(2, '0');
+
 export const saveLog = () => {
     const _userAnswers = sessionStorage.getItem('user-answers');
     const userAnswers = JSON.parse(_userAnswers === null ? 'Error when getting user answers' : _userAnswers)
@@ -7,16 +9,24 @@ export const saveLog = () => {
             (ans: UserAnswer) =>
                 `${ans.index + 1},${ans.filename},${ans.answer},${ans.answerInPlainText},${
                     ans.userAnswerMatchesGroundTruth ? 'Correct' : 'Wrong'
-                },${ans.answeredAt},${ans.timeElapsed}\n`
+                },${ans.answeredAt},${ans.answeredAtUTC},${ans.timeElapsed}\n`
         )
         .join('');
+    const imageSet = sessionStorage.getItem('image-set');
+    const savingTime = new Date();
+    const savingTimeString = `${savingTime.getUTCFullYear()}${formatDateNumbers(
+        savingTime.getUTCMonth() + 1
+    )}${formatDateNumbers(savingTime.getUTCDate())}${formatDateNumbers(savingTime.getUTCHours())}${formatDateNumbers(
+        savingTime.getUTCMinutes()
+    )}${formatDateNumbers(savingTime.getUTCSeconds())}`;
+
     const blob = `sessionStartEpochTimestamp, ${sessionStorage.getItem(
         'session-start-epoch-timestamp'
-    )}\nimageSet,${sessionStorage.getItem(
-        'image-set'
-    )}\nindex,filename,answer,answerInPlainText,userAnswerMatchesGroundTruth,answeredAtEpochTimestamp,timeElapsed(ms)\n${userAnswers}`;
+    )}\nsessionStartUTCTimestamp, ${sessionStorage.getItem(
+        'session-start-UTC-timestamp'
+    )}\nimageSet,${imageSet}\nindex,filename,answer,answerInPlainText,userAnswerMatchesGroundTruth,answeredAtEpochTimestamp,answeredAtUTCTimestamp,timeElapsed(ms)\n${userAnswers}`;
     console.log(blob);
-    download('answer.csv', blob);
+    download(`photoExposureAnswers_set${imageSet}_${savingTimeString}.csv`, blob);
 };
 
 // https://stackoverflow.com/a/18197341, by mikemaccana
