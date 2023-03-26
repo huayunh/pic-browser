@@ -5,14 +5,16 @@ export const saveLog = () => {
     const userAnswers = JSON.parse(_userAnswers === null ? 'Error when getting user answers' : _userAnswers)
         .map(
             (ans: UserAnswer) =>
-                `${ans.index},${ans.filename},${ans.answer},${ans.answerInPlainText},${
+                `${ans.index + 1},${ans.filename},${ans.answer},${ans.answerInPlainText},${
                     ans.userAnswerMatchesGroundTruth ? 'Correct' : 'Wrong'
                 },${ans.answeredAt},${ans.timeElapsed}\n`
         )
         .join('');
     const blob = `sessionStartEpochTimestamp, ${sessionStorage.getItem(
         'session-start-epoch-timestamp'
-    )}\n\nindex,filename,answer,answerInPlainText,userAnswerMatchesGroundTruth,answeredAtEpochTimestamp,timeElapsed(ms)\n${userAnswers}`;
+    )}\nimageSet,${sessionStorage.getItem(
+        'image-set'
+    )}\nindex,filename,answer,answerInPlainText,userAnswerMatchesGroundTruth,answeredAtEpochTimestamp,timeElapsed(ms)\n${userAnswers}`;
     console.log(blob);
     download('answer.csv', blob);
 };

@@ -46,7 +46,7 @@ const styles = {
 const App = () => {
     const [lastSelectionTimeStamp, setLastSelectionTimeStamp] = React.useState<null | number>(null);
     const [currentFilenameIndex, setCurrentFilenameIndex] = React.useState(0);
-    const [FILENAMES, setFILENAMES] = React.useState<string[]>([]);
+    const [FILENAMES, setFILENAMES] = React.useState(FILENAMES_FOR_DIFFERENT_PARTICIPANTS[0]);
 
     React.useEffect(() => {
         let listOfFilenames = FILENAMES_FOR_DIFFERENT_PARTICIPANTS[0];
@@ -61,10 +61,10 @@ const App = () => {
                 sessionStorage.setItem('image-set', imageSet.toString());
                 listOfFilenames = FILENAMES_FOR_DIFFERENT_PARTICIPANTS[imageSet - 1];
             } else {
-                sessionStorage.setItem('imageSet', '1');
+                sessionStorage.setItem('image-set', '1');
             }
         } else {
-            sessionStorage.setItem('imageSet', '1');
+            sessionStorage.setItem('image-set', '1');
         }
 
         setFILENAMES(listOfFilenames);
