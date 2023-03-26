@@ -1,6 +1,22 @@
 import { UserAnswer } from './types';
 
-const formatDateNumbers = (num: number): string => num.toString().padStart(2, '0');
+const formatDateNumbers = (num: number, size = 2): string => num.toString().padStart(size, '0');
+
+export const getCleanUTCTimestamp = (showMillisecond = false) => {
+    const date = new Date();
+    if (showMillisecond) {
+        return `${date.getUTCFullYear()}-${formatDateNumbers(date.getUTCMonth() + 1)}-${formatDateNumbers(
+            date.getUTCDate()
+        )} ${formatDateNumbers(date.getUTCHours())}:${formatDateNumbers(date.getUTCMinutes())}:${formatDateNumbers(
+            date.getUTCSeconds()
+        )}.${formatDateNumbers(date.getUTCMilliseconds(), 3)}`;
+    }
+    return `${date.getUTCFullYear()}${formatDateNumbers(date.getUTCMonth() + 1)}${formatDateNumbers(
+        date.getUTCDate()
+    )}${formatDateNumbers(date.getUTCHours())}${formatDateNumbers(date.getUTCMinutes())}${formatDateNumbers(
+        date.getUTCSeconds()
+    )}`;
+};
 
 export const saveLog = () => {
     const _userAnswers = sessionStorage.getItem('user-answers');
@@ -13,12 +29,6 @@ export const saveLog = () => {
         )
         .join('');
     const imageSet = sessionStorage.getItem('image-set');
-    const savingTime = new Date();
-    const savingTimeString = `${savingTime.getUTCFullYear()}${formatDateNumbers(
-        savingTime.getUTCMonth() + 1
-    )}${formatDateNumbers(savingTime.getUTCDate())}${formatDateNumbers(savingTime.getUTCHours())}${formatDateNumbers(
-        savingTime.getUTCMinutes()
-    )}${formatDateNumbers(savingTime.getUTCSeconds())}`;
 
     const blob = `sessionStartEpochTimestamp, ${sessionStorage.getItem(
         'session-start-epoch-timestamp'
@@ -26,7 +36,7 @@ export const saveLog = () => {
         'session-start-UTC-timestamp'
     )}\nimageSet,${imageSet}\nindex,filename,answer,answerInPlainText,userAnswerMatchesGroundTruth,answeredAtEpochTimestamp,answeredAtUTCTimestamp,timeElapsed(ms)\n${userAnswers}`;
     console.log(blob);
-    download(`photoExposureAnswers_set${imageSet}_${savingTimeString}.csv`, blob);
+    download(`photoExposureAnswers_set${imageSet}_${getCleanUTCTimestamp()}.csv`, blob);
 };
 
 // https://stackoverflow.com/a/18197341, by mikemaccana

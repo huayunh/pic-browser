@@ -7,7 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 
 import { UserAnswer } from './shared/types';
 import FILENAMES_FOR_DIFFERENT_PARTICIPANTS from './InterraterImageFilenames';
-import { saveLog, guessGroundTruthFromFilename } from './shared/utilities';
+import { saveLog, guessGroundTruthFromFilename, getCleanUTCTimestamp } from './shared/utilities';
 
 const styles = {
     appBarProgressBar: {
@@ -53,7 +53,7 @@ const App = () => {
         setLastSelectionTimeStamp(Date.now());
         sessionStorage.clear();
         sessionStorage.setItem('session-start-epoch-timestamp', Date.now().toString());
-        sessionStorage.setItem('session-start-UTC-timestamp', new Date().toUTCString());
+        sessionStorage.setItem('session-start-UTC-timestamp', getCleanUTCTimestamp(true));
         sessionStorage.setItem('user-answers', '[]');
 
         if (window.location.search) {
@@ -96,7 +96,7 @@ const App = () => {
                 answerInPlainText: userAnswerInPlainText,
                 userAnswerMatchesGroundTruth: guessGroundTruthFromFilename(FILENAMES[currentFilenameIndex]) === option,
                 answeredAt: Date.now(),
-                answeredAtUTC: new Date().toUTCString(),
+                answeredAtUTC: getCleanUTCTimestamp(true),
                 timeElapsed: Date.now() - lastSelectionTimeStamp,
             });
             sessionStorage.setItem('user-answers', JSON.stringify(userAnswers));
