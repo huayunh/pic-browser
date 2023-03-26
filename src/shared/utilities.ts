@@ -25,7 +25,7 @@ export const saveLog = () => {
             (ans: UserAnswer) =>
                 `${ans.index + 1},${ans.filename},${ans.answer},${ans.answerInPlainText},${
                     ans.userAnswerMatchesGroundTruth ? 'Correct' : 'Wrong'
-                },${ans.answeredAt},${ans.answeredAtUTC},${ans.timeElapsed}\n`
+                },${ans.answeredAt}, ${ans.answeredAtUTC},${ans.timeElapsed}\n`
         )
         .join('');
     const imageSet = sessionStorage.getItem('image-set');
