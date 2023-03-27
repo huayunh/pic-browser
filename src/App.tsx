@@ -124,14 +124,36 @@ const App = () => {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Stack direction={'column'} style={{ height: 'calc(100% - 56px)' }} alignItems={'center'} gap={1}>
+            <Stack
+                direction={'column'}
+                style={{ height: 'calc(100% - 56px - 50px)' }}
+                alignItems={'center'}
+                gap={1}
+                py={2}
+            >
                 <Box
                     sx={styles.targetImage}
                     style={{
                         backgroundImage: `url("${process.env.PUBLIC_URL}/images/${FILENAMES[currentFilenameIndex]}")`,
                     }}
                 ></Box>
-                <Stack width={900} direction={'row'}>
+                <Stack maxWidth={1200} width={'80%'} direction={'row'}>
+                    <Box
+                        sx={[styles.selectionButton, { '&:hover': { backgroundColor: 'error.dark' } }]}
+                        style={{
+                            opacity: currentFilenameIndex === 0 ? 0 : 1,
+                            cursor: currentFilenameIndex === 0 ? 'default' : undefined,
+                        }}
+                        onClick={() => {
+                            if (currentFilenameIndex !== 0) {
+                                setCurrentFilenameIndex(currentFilenameIndex - 1);
+                                setLastSelectionTimeStamp(Date.now());
+                            }
+                        }}
+                    >
+                        <Typography variant={'h5'}>Back</Typography>
+                    </Box>
+                    <Box flex={1} />
                     <Box
                         sx={styles.selectionButton}
                         onClick={() => {
