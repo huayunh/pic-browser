@@ -1,5 +1,7 @@
 # pic-browser
 
+[![Deploy static content to Pages](https://github.com/huayunh/pic-browser/actions/workflows/static.yml/badge.svg)](https://github.com/huayunh/pic-browser/actions/workflows/static.yml)
+
 Given a picture, select if it is over exposed, normal or under exposed.
 
 ## Run Locally
